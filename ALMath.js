@@ -1,5 +1,5 @@
 var ALMath = {
-	version : "0.1 {Angel Luis Math Library}",
+	version : "0.2 {Angel Luis Math Library}",
 	license: "The MIT License (MIT) \
 		\
 		Copyright (c) <year> <copyright holders> \
@@ -833,6 +833,45 @@ ALMath.Matrix4.prototype = {
 		ny = c[1]*v.x+c[5]*v.y+c[9]*v.z+c[13];
 		nz = c[2]*v.x+c[6]*v.y+c[10]*v.z+c[14];
 		return new ALMath.Vector3(nx,ny,nz);
+	},
+
+	multiplyByVector4 : function (v){
+		/*var vector = v;
+		if (v instanceof ALMath.Vector3){
+			vector = new ALMath.Vector4(v.x,v.y,v.z,0);
+		}*/
+		var result,nx,ny,nz,nw;
+		var c = this.components;
+		nx = c[0]*v.x+c[4]*v.y+c[8]*v.z+c[12]*v.w;
+		ny = c[1]*v.x+c[5]*v.y+c[9]*v.z+c[13]*v.w;
+		nz = c[2]*v.x+c[6]*v.y+c[10]*v.z+c[14]*v.w;
+		nw = c[3]*v.x+c[7]*v.y+c[11]*v.z+c[15]*v.w;
+		/*nx = c[0]*v.x+c[1]*v.y+c[2]*v.z+c[3]*v.w;
+		ny = c[4]*v.x+c[5]*v.y+c[6]*v.z+c[7]*v.w;
+		nz = c[8]*v.x+c[9]*v.y+c[10]*v.z+c[11]*v.w;
+		nw = c[12]*v.x+c[13]*v.y+c[14]*v.z+c[15]*v.w;*/
+		return new ALMath.Vector4(nx,ny,nz,nw);
+	},
+
+	transformPoint : function(v){
+		//var vec4 = this.multiplyByVector(v);
+		/*vec4.x = vec4.x / vec4.w;
+		vec4.y = vec4.y / vec4.w;
+		vec4.z = vec4.z / vec4.w;
+		vec4.w = 1;*/
+		var m = this.components;
+
+		var dst = new ALMath.Vector3();
+	    var v0 = v.x;
+	    var v1 = v.y;
+	    var v2 = v.z;
+	    var d = v0 * m[0 * 4 + 3] + v1 * m[1 * 4 + 3] + v2 * m[2 * 4 + 3] + m[3 * 4 + 3];
+
+	    dst.x = (v0 * m[0 * 4 + 0] + v1 * m[1 * 4 + 0] + v2 * m[2 * 4 + 0] + m[3 * 4 + 0]) / d;
+	    dst.y = (v0 * m[0 * 4 + 1] + v1 * m[1 * 4 + 1] + v2 * m[2 * 4 + 1] + m[3 * 4 + 1]) / d;
+	    dst.z = (v0 * m[0 * 4 + 2] + v1 * m[1 * 4 + 2] + v2 * m[2 * 4 + 2] + m[3 * 4 + 2]) / d;
+
+	    return dst;
 
 	},
 
@@ -1025,128 +1064,45 @@ ALMath.Matrix4.prototype = {
 		var tc = this.components;
 		var oc = inv.components;
 
-		tc[0] = oc[5]  * oc[10] * oc[15] - 
-            oc[5]  * oc[11] * oc[14] - 
-            oc[9]  * oc[6]  * oc[15] + 
-            oc[9]  * oc[7]  * oc[14] +
-            oc[13] * oc[6]  * oc[11] - 
-            oc[13] * oc[7]  * oc[10];
 
-	    tc[4] = -oc[4]  * oc[10] * oc[15] + 
-	        oc[4]  * oc[11] * oc[14] + 
-	        oc[8]  * oc[6]  * oc[15] - 
-	        oc[8]  * oc[7]  * oc[14] - 
-	        oc[12] * oc[6]  * oc[11] + 
-	        oc[12] * oc[7]  * oc[10];
 
-	    tc[8] = oc[4]  * oc[9] * oc[15] - 
-	        oc[4]  * oc[11] * oc[13] - 
-	        oc[8]  * oc[5] * oc[15] + 
-	        oc[8]  * oc[7] * oc[13] + 
-	        oc[12] * oc[5] * oc[11] - 
-	        oc[12] * oc[7] * oc[9];
+		var n11 = tc[ 0 ], n21 = tc[ 1 ], n31 = tc[ 2 ], n41 = tc[ 3 ],
+		n12 = tc[ 4 ], n22 = tc[ 5 ], n32 = tc[ 6 ], n42 = tc[ 7 ],
+		n13 = tc[ 8 ], n23 = tc[ 9 ], n33 = tc[ 10 ], n43 = tc[ 11 ],
+		n14 = tc[ 12 ], n24 = tc[ 13 ], n34 = tc[ 14 ], n44 = tc[ 15 ],
 
-	    tc[12] = -oc[4]  * oc[9] * oc[14] + 
-	        oc[4]  * oc[10] * oc[13] +
-	        oc[8]  * oc[5] * oc[14] - 
-	        oc[8]  * oc[6] * oc[13] - 
-	        oc[12] * oc[5] * oc[10] + 
-	        oc[12] * oc[6] * oc[9];
+		t11 = n23 * n34 * n42 - n24 * n33 * n42 + n24 * n32 * n43 - n22 * n34 * n43 - n23 * n32 * n44 + n22 * n33 * n44,
+		t12 = n14 * n33 * n42 - n13 * n34 * n42 - n14 * n32 * n43 + n12 * n34 * n43 + n13 * n32 * n44 - n12 * n33 * n44,
+		t13 = n13 * n24 * n42 - n14 * n23 * n42 + n14 * n22 * n43 - n12 * n24 * n43 - n13 * n22 * n44 + n12 * n23 * n44,
+		t14 = n14 * n23 * n32 - n13 * n24 * n32 - n14 * n22 * n33 + n12 * n24 * n33 + n13 * n22 * n34 - n12 * n23 * n34;
 
-	    tc[1] = -oc[1]  * oc[10] * oc[15] + 
-	        oc[1]  * oc[11] * oc[14] + 
-	        oc[9]  * oc[2] * oc[15] - 
-	        oc[9]  * oc[3] * oc[14] - 
-	        oc[13] * oc[2] * oc[11] + 
-	        oc[13] * oc[3] * oc[10];
+		var det = n11 * t11 + n21 * t12 + n31 * t13 + n41 * t14;
 
-	    tc[5] = oc[0]  * oc[10] * oc[15] - 
-	        oc[0]  * oc[11] * oc[14] - 
-	        oc[8]  * oc[2] * oc[15] + 
-	        oc[8]  * oc[3] * oc[14] + 
-	        oc[12] * oc[2] * oc[11] - 
-	        oc[12] * oc[3] * oc[10];
 
-	    tc[9] = -oc[0]  * oc[9] * oc[15] + 
-	        oc[0]  * oc[11] * oc[13] + 
-	        oc[8]  * oc[1] * oc[15] - 
-	        oc[8]  * oc[3] * oc[13] - 
-	        oc[12] * oc[1] * oc[11] + 
-	        oc[12] * oc[3] * oc[9];
+		var detInv = 1 / det;
 
-	    tc[13] = oc[0]  * oc[9] * oc[14] - 
-	        oc[0]  * oc[10] * oc[13] - 
-	        oc[8]  * oc[1] * oc[14] + 
-	        oc[8]  * oc[2] * oc[13] + 
-	        oc[12] * oc[1] * oc[10] - 
-	        oc[12] * oc[2] * oc[9];
+		oc[ 0 ] = t11 * detInv;
+		oc[ 1 ] = ( n24 * n33 * n41 - n23 * n34 * n41 - n24 * n31 * n43 + n21 * n34 * n43 + n23 * n31 * n44 - n21 * n33 * n44 ) * detInv;
+		oc[ 2 ] = ( n22 * n34 * n41 - n24 * n32 * n41 + n24 * n31 * n42 - n21 * n34 * n42 - n22 * n31 * n44 + n21 * n32 * n44 ) * detInv;
+		oc[ 3 ] = ( n23 * n32 * n41 - n22 * n33 * n41 - n23 * n31 * n42 + n21 * n33 * n42 + n22 * n31 * n43 - n21 * n32 * n43 ) * detInv;
 
-	    tc[2] = oc[1]  * oc[6] * oc[15] - 
-	        oc[1]  * oc[7] * oc[14] - 
-	        oc[5]  * oc[2] * oc[15] + 
-	        oc[5]  * oc[3] * oc[14] + 
-	        oc[13] * oc[2] * oc[7] - 
-	        oc[13] * oc[3] * oc[6];
+		oc[ 4 ] = t12 * detInv;
+		oc[ 5 ] = ( n13 * n34 * n41 - n14 * n33 * n41 + n14 * n31 * n43 - n11 * n34 * n43 - n13 * n31 * n44 + n11 * n33 * n44 ) * detInv;
+		oc[ 6 ] = ( n14 * n32 * n41 - n12 * n34 * n41 - n14 * n31 * n42 + n11 * n34 * n42 + n12 * n31 * n44 - n11 * n32 * n44 ) * detInv;
+		oc[ 7 ] = ( n12 * n33 * n41 - n13 * n32 * n41 + n13 * n31 * n42 - n11 * n33 * n42 - n12 * n31 * n43 + n11 * n32 * n43 ) * detInv;
 
-	    tc[6] = -oc[0]  * oc[6] * oc[15] + 
-	        oc[0]  * oc[7] * oc[14] + 
-	        oc[4]  * oc[2] * oc[15] - 
-	        oc[4]  * oc[3] * oc[14] - 
-	        oc[12] * oc[2] * oc[7] + 
-	        oc[12] * oc[3] * oc[6];
+		oc[ 8 ] = t13 * detInv;
+		oc[ 9 ] = ( n14 * n23 * n41 - n13 * n24 * n41 - n14 * n21 * n43 + n11 * n24 * n43 + n13 * n21 * n44 - n11 * n23 * n44 ) * detInv;
+		oc[ 10 ] = ( n12 * n24 * n41 - n14 * n22 * n41 + n14 * n21 * n42 - n11 * n24 * n42 - n12 * n21 * n44 + n11 * n22 * n44 ) * detInv;
+		oc[ 11 ] = ( n13 * n22 * n41 - n12 * n23 * n41 - n13 * n21 * n42 + n11 * n23 * n42 + n12 * n21 * n43 - n11 * n22 * n43 ) * detInv;
 
-	    tc[10] = oc[0]  * oc[5] * oc[15] - 
-	        oc[0]  * oc[7] * oc[13] - 
-	        oc[4]  * oc[1] * oc[15] + 
-	        oc[4]  * oc[3] * oc[13] + 
-	        oc[12] * oc[1] * oc[7] - 
-	        oc[12] * oc[3] * oc[5];
+		oc[ 12 ] = t14 * detInv;
+		oc[ 13 ] = ( n13 * n24 * n31 - n14 * n23 * n31 + n14 * n21 * n33 - n11 * n24 * n33 - n13 * n21 * n34 + n11 * n23 * n34 ) * detInv;
+		oc[ 14 ] = ( n14 * n22 * n31 - n12 * n24 * n31 - n14 * n21 * n32 + n11 * n24 * n32 + n12 * n21 * n34 - n11 * n22 * n34 ) * detInv;
+		oc[ 15 ] = ( n12 * n23 * n31 - n13 * n22 * n31 + n13 * n21 * n32 - n11 * n23 * n32 - n12 * n21 * n33 + n11 * n22 * n33 ) * detInv;
 
-	    tc[14] = -oc[0]  * oc[5] * oc[14] + 
-	        oc[0]  * oc[6] * oc[13] + 
-	        oc[4]  * oc[1] * oc[14] - 
-	        oc[4]  * oc[2] * oc[13] - 
-	        oc[12] * oc[1] * oc[6] + 
-	        oc[12] * oc[2] * oc[5];
 
-	    tc[3] = -oc[1] * oc[6] * oc[11] + 
-	        oc[1] * oc[7] * oc[10] + 
-	        oc[5] * oc[2] * oc[11] - 
-	        oc[5] * oc[3] * oc[10] - 
-	        oc[9] * oc[2] * oc[7] + 
-	        oc[9] * oc[3] * oc[6];
-
-	    tc[7] = oc[0] * oc[6] * oc[11] - 
-	        oc[0] * oc[7] * oc[10] - 
-	        oc[4] * oc[2] * oc[11] + 
-	        oc[4] * oc[3] * oc[10] + 
-	        oc[8] * oc[2] * oc[7] - 
-	        oc[8] * oc[3] * oc[6];
-
-	    tc[11] = -oc[0] * oc[5] * oc[11] + 
-	        oc[0] * oc[7] * oc[9] + 
-	        oc[4] * oc[1] * oc[11] - 
-	        oc[4] * oc[3] * oc[9] - 
-	        oc[8] * oc[1] * oc[7] + 
-	        oc[8] * oc[3] * oc[5];
-
-	    tc[15] = oc[0] * oc[5] * oc[10] - 
-	        oc[0] * oc[6] * oc[9] - 
-	        oc[4] * oc[1] * oc[10] + 
-	        oc[4] * oc[2] * oc[9] + 
-	        oc[8] * oc[1] * oc[6] - 
-	        oc[8] * oc[2] * oc[5];
-
-	    var det = oc[0] * tc[0] + oc[1] * tc[4] + oc[2] * tc[8] + oc[3] * tc[12];
-
-	    //if (det == 0)
-        //return false;
-
-    	det = 1.0 / det;
-
-    	inv.multiplyByScalar(det);
-
-    	return inv;
+		return inv;
 
 	},
 
@@ -1166,40 +1122,12 @@ ALMath.Matrix4.prototype = {
 		var y = x.cross(z);
 		y = y.normalize();
 
-		z = z.negate();
-
-		c[0] = x.x; c[1] = x.y; c[2] = x.z; c[12] = -x.dot(eye);
-		c[4] = y.x; c[5] = y.y; c[6] = y.z; c[13] = -y.dot(eye);
-		c[8] = z.x; c[9] = z.y; c[10] = z.z; c[14] = -z.dot(eye);
-
-		/*c[0] = n.x; c[1] = u.x; c[2] = v.x;
-		c[4] = n.y; c[5] = u.y; c[6] = v.y;
-		c[8] = n.z; c[9] = u.z; c[10] = v.z;
-		c[12] = -n.dot(eye); c[13] = -u.dot(eye); c[14] = -v.dot(eye);*/
-
-
-
-		//c[ 0 ] = xaxis.x; c[ 4 ] = yaxis.x; c[ 8 ] = zaxis.x;
-		//c[ 1 ] = xaxis.y; c[ 5 ] = yaxis.y; c[ 9 ] = zaxis.y;
-		//c[ 2 ] = xaxis.z; c[ 6 ] = yaxis.z; c[ 10 ] = zaxis.z;
-
-		/*c[ 0 ] = xaxis.x; c[ 4 ] = xaxis.y; c[ 8 ] = xaxis.z;
-		c[ 1 ] = yaxis.x; c[ 5 ] = yaxis.y; c[ 9 ] = yaxis.z;
-		c[ 2 ] = zaxis.x; c[ 6 ] = zaxis.y; c[ 10 ] = zaxis.z;*/
+		c[0] = x.x; c[1] = x.y; c[2] = x.z; c[3] = 0;
+		c[4] = y.x; c[5] = y.y; c[6] = y.z; c[7] = 0;
+		c[8] = -z.x; c[9] = -z.y; c[10] = -z.z; c[11] = 0;
+		c[12] = eye.x; c[13] = eye.y; c[14] = eye.z; c[15] = 1;
 
 		return this;
-
-		/*var n = target.clone();
-		n.normalize();
-		var u = up.clone();
-		u.normalize();
-		u = u.cross(target);
-		v = n.cross(u);
-
-		c[ 0 ] = u.x;	c[ 4 ] = u.y;	c[ 8 ] = u.z;	c[ 12 ] = 0;
-		c[ 1 ] = v.x;	c[ 5 ] = v.y;	c[ 9 ] = v.z;	c[ 13 ] = 0;
-		c[ 2 ] = n.x;	c[ 6 ] = n.y;	c[ 10 ] = n.z;	c[ 14 ] = 0;
-		c[ 3 ] = 0;		c[ 7 ] = 0;		c[ 11 ] = 0;	c[ 15 ] = 1;*/
 	},
 
 	equals : function (m){

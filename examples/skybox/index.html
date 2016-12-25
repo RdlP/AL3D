@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>AL3D Demo - Angel Luis 3D Rendering Engine</title>
+	<meta charset='utf-8'/>
+	<script type="text/javascript" src="../../ALMath.js"></script>
+	<script type="text/javascript" src="../../AL3D.js"></script>
+	<script type="text/javascript" src="app.js"></script>
+	<link rel="stylesheet" type="text/css" href="main.css">
+</head>
+<body onload="main()">
+	<div style="position: absolute; left: 10px; top: 10px; width:300px; height:300px; background-color: rgba(255,255,255,0.8); padding:10px">
+		<p>
+			Presione las distintas teclas para interactuar con la escena:
+		</p>
+
+		<p>
+			1: Efecto de escala de grises<br>
+			2: Efecto Sepia<br>
+			3: Efecto realce de bordes<br>
+			4: Efecto Desenfoque Gaussiano<br>
+			5: Efecto Detector de bordes<br>
+			0: Eliminar efecto<br>
+		</p>
+		<p>
+			5: Activar los mapas normales y especulares<br>
+			6: Activar solo el mapa de color, desactivando los demás mapas<br>
+		</p>
+	</div>	
+	<div id="canvas"></div>
+</body>
+</html>

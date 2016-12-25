@@ -49,7 +49,7 @@ var main = function(){
 			if (key == 48) {
 		    	renderer.clearEffects();
 		   	}else if (key == 49) {
-		   		renderer.addEffect(new AL3D.GreyScaleEffect());
+		   		renderer.addEffect(new AL3D.PosterizationEffect());
 		   	}else if (key == 50) {
 		   		renderer.addEffect(new AL3D.SepiaEffect());
 		   	}else if (key == 51) {
