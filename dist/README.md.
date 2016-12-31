@@ -1,0 +1,14 @@
+AL3D is a library to render 3D scenes in the Web. It uses WebGL as low end technology. AL3D include a 3D library called AL3D, but also include a complete Math library called ALMath and a physics library called ALPhysics.
+
+AL3D has a bascis class that are needed in order to render a simple scene. This classes are:
+ - Renderer
+ - Camera
+ - Scene
+
+These classes are mandatory in order to render a scene. You can delcare it as follow
+
+```javascript
+var renderer = new AL3D.Renderer(window.innerWidth,window.innerHeight);
+var camera = new AL3D.PerspectiveCamera(40, window.innerWidth/window.innerHeight);
+var scene = new AL3D.Scene();
+```

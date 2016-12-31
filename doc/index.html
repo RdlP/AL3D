@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><p>AL3D is a library to render 3D scenes in the Web. It uses WebGL as low end technology. AL3D include a 3D library called AL3D, but also include a complete Math library called ALMath and a physics library called ALPhysics.</p>
+<h2>Basic Classes</h2><p>AL3D has a bascis class that are needed in order to render a simple scene. This classes are:</p>
+<ul>
+<li>Renderer</li>
+<li>Camera</li>
+<li>Scene</li>
+</ul>
+<p>These classes are mandatory in order to render a scene. You can delcare it as follow</p>
+<pre class="prettyprint source lang-javascript"><code>var renderer = new AL3D.Renderer(window.innerWidth,window.innerHeight);
+var camera = new AL3D.PerspectiveCamera(40, window.innerWidth/window.innerHeight);
+var scene = new AL3D.Scene();</code></pre><h3>Renderer</h3><p>The Renderer class is the responsable for render the scene, you need to pass it the width and height of the viewport, if you want a render that fill the browser you can pass window.innerWidth and window.innerHeight for width and height respectively. To render the scene you need to tell it to the render as follow: <code>renderer.render(scene, camera);</code></p>
+<h3>Camera</h3><p>The camera is the object that you use to see the 3D world. It is your eyes. The <code>Camera</code> class is an abstract class. You need instantiate a <code>PerspectiveCamera</code> or <code>OrthographicCamera</code></p>
+<p>The constructor for PerspectiveCamera is:</p>
+<pre class="prettyprint source lang-javascript"><code>AL3D.PerspectiveCamera = function(fov, aspect, near, far)</code></pre><p>Where <code>fov</code> is the angle of the frustum, <code>aspect</code> is the aspect ratio and near and far are the near and far plane for the frustum.</p>
+<p>The default values for the parameters are:</p>
+<ul>
+<li><code>fov</code> = 40</li>
+<li><code>aspect</code> = 1</li>
+<li><code>near</code> = 0.1</li>
+<li><code>far</code> = 1000</li>
+</ul>
+<p>On the other hand the constructor for OrthographicCamera is:</p>
+<pre class="prettyprint source lang-javascript"><code>AL3D.OrthographicCamera = function(left, right, top, bottom, near, far)</code></pre><p>Where <code>left</code>, <code>right</code>, <code>top</code>, <code>bottom</code>, <code>near</code> and <code>far</code> are the planes for the frustum and has no default values.</p>
+<h3>Scene</h3><p>The Scene object is the responsible for store all object that must be render. You can add AL3D.Object3D to the scene. AL3D.Object3D is an abstract class from which all renderable object inherit. The following classes are classes that inherit from AL3D.Object3D and are instantiables.</p>
+<ul>
+<li>PointLight</li>
+<li>DirectionaLight</li>
+<li>SpotLight</li>
+<li>AmbientLight</li>
+<li>Mesh</li>
+<li>OrthographicCamera</li>
+<li>PerspectiveCamera</li>
+</ul>
+<p>And here are other abstracts classes that also inherit from AL3D.Object3D.</p>
+<ul>
+<li>Camera</li>
+<li>Light</li>
+</ul>
+<p>You can easely add objects to the scene with the <code>add</code> scene function</p>
+<pre class="prettyprint source lang-javascript"><code>scene.add(mesh);</code></pre><h2>Other important classes</h2><p>Apart from the previous classes AL3D has other important clases</p>
+<ul>
+<li><code>Mesh</code> class allows you to render meshes.</li>
+<li><code>Material</code> classes allow to add properties surfaces to the meshes</li>
+<li><code>Light</code> classes allow you to add light to the scene.</li>
+</ul>
+<h3>Mesh</h3><p><code>Mesh</code> class allows you to render meshes. You can use the mesh constructor to create a mesh. When you use the constructor you need pass the vertices, indices of the mesh. Other important parameters are normals, uv, and material.</p>
+<pre class="prettyprint source lang-javascript"><code>var mesh = new AL3D.Mesh({vertices : [], indices : [], uv : [], normals : [], material : material});</code></pre><p>and then you can add it to the scene</p>
+<pre class="prettyprint source lang-javascript"><code>scene.add(mesh);</code></pre><p>In most cases you will not use this method. </p>
+<p>You can create a basic primitives with static mesh method</p>
+<pre class="prettyprint source lang-javascript"><code>var sphere = AL3D.Mesh.createSphere({radius : 1, material : material});
+var cylinder = AL3D.Mesh.createCylinder({radius : 1, height: 2 material : material});
+var cone = AL3D.Mesh.createCone({radius : 1, height : 2, material : material});
+var circle = AL3D.Mesh.createCircle({radius : 1, resolution : 20, material : material});
+var cube = AL3D.Mesh.createCube({size : 1, material : material});
+var plane = AL3D.Mesh.createPlane({size : 1, material : material});</code></pre><p>Also, you can load a model from a json model. To export models from blender you need a plugin that transform blender model to json model.</p>
+<pre class="prettyprint source lang-javascript"><code>AL3D.Utils.loadModel({model : &quot;suzanne.json&quot;}, function(mesh){
+            mesh.setMaterial(new AL3D.BlinnMaterial({shininess : 128, diffuse : 0xFFAAAAAA, specular : 0xffffffff, shading : AL3D.PhongInterpolation}));
+            mesh.position = new ALMath.Vector3(-0.9,-0.3,-2);
+            mesh.orientation.x = -20;
+            mesh.scale = new ALMath.Vector3(0.28,0.28,0.28);
+            scene.add(mesh);
+            renderer.needUpdate = true;
+        })</code></pre><h3>Material</h3><p>Material classes give surface properties to meshes, for example, a material can determine the amount of light that mesh absorbs, the color of the meshes, if the meshes is afected by the light etc.</p>
+<p>AL3D has many different material classes. AL3D.Material is an abstract class from which inherit the following classes</p>
+<ul>
+<li><code>BasicMaterial</code>. With this materal the mesh is not affected by the light</li>
+<li><code>LambertMaterial</code>. With this material the mesh gets diffuse light</li>
+<li><code>BlinnMaterial</code> With this material the mesh gets diffuse and specular components</li>
+<li><code>PhongMaterial</code>. With this material the mesh gets diffuse and specular components.</li>
+<li><code>TonnMaterial</code>. With this material the mesh gets a toon aspect.</li>
+</ul>
+<p>The abstract class material constructor is</p>
+<pre class="prettyprint source lang-javascript"><code>    AL3D.Material = function(p);</code></pre><p>Where <code>p</code> is and object that can contains the following properties</p>
+<ul>
+<li><code>texture</code>to specify a color map</li>
+<li><code>video</code> to use video as a texture </li>
+<li><code>specularMap</code> to specify a specular map</li>
+<li><code>normalMap</code> to specify a normal map</li>
+</ul>
+<p>Please refer to the API documentation to the the other material parameters.</p>
+<p>To create a BlinnMaterial you can do the following</p>
+<pre class="prettyprint source lang-javascript"><code>var material = new AL3D.BlinnMaterial({shininess : 128, diffuse : 0xFFAAAAAA, specular : 0xffffffff, shading : AL3D.PhongInterpolation});
+mesh.setMaterial(material);</code></pre><h3>Lights</h3><p>Lights are necessary to give a realistic result. The lights will interact with the materials added to the meshes, but remember that lights doesn't affect to the BasicMaterial.</p>
+<p>AL3D has a couple of lights. <code>Light</code> is a abstract class from which inherit the following classes:</p>
+<ul>
+<li><code>PointLight</code></li>
+<li><code>DirectionalLight</code></li>
+<li><code>AmbientLight</code></li>
+<li><code>SpotLight</code></li>
+</ul>
+<p>Please, refer to the API documentation to learn how to uses ligths.</p>
+<p>Lights inherit from Object3D so, you can add it to the scene</p>
+<pre class="prettyprint source lang-javascript"><code>scene.add(light);</code></pre><h2>Basic example</h2><p>In this example we are going to create a rotating cube in the center of screen with a color map.</p>
+<p>This is the javascript code</p>
+<pre class="prettyprint source lang-javascript"><code>var renderer, scene, camera;
+var cube;
+
+var main = function(){
+    var init = function(){
+        renderer = new AL3D.Renderer(window.innerWidth,window.innerHeight);
+        camera = new AL3D.PerspectiveCamera(40, window.innerWidth/window.innerHeight);
+        scene = new AL3D.Scene();
+
+        var cubeMaterial = cubeMaterial = new AL3D.BlinnMaterial({shininess : 128, diffuse : 0xFFAAAAAA, specular : 0xffffffff, shading : AL3D.PhongInterpolation,  texture: 'earth-tex.jpg'});
+        cube = new AL3D.Mesh.createCube({size: 2, material : cubeMaterial});
+        cube.position = new ALMath.Vector3(0,0,-3);
+        var pointLight = new AL3D.PointLight({color : 0xFFFFFFFF, intensity : 1, position :  new ALMath.Vector3(0,0,0)});
+        var directionalLight = new AL3D.DirectionalLight({color : 0xFFFFFFFF, intensity : 2, position :  new ALMath.Vector3(0,1,0)});
+
+        scene.add(cube);
+        scene.add(directionalLight);
+        scene.add(pointLight);
+
+        document.getElementById(&quot;canvas&quot;).appendChild(renderer.getDomElement());
+    };
+
+    var animate = function(){
+        cube.orientation.x = (cube.orientation.x+0.005)%360;
+        cube.orientation.y = (cube.orientation.y+0.005)%360;
+        renderer.render(scene, camera);
+        window.requestAnimationFrame(animate);
+    };
+
+    init();
+    animate();
+}</code></pre><p>And this is the html code</p>
+<pre class="prettyprint source lang-html"><code>&lt;!DOCTYPE html>
+&lt;html>
+&lt;head>
+    &lt;title>AL3D Demo - Basic Example&lt;/title>
+    &lt;meta charset='utf-8'/>
+    &lt;script type=&quot;text/javascript&quot; src=&quot;AL3D.js&quot;>&lt;/script>
+    &lt;script type=&quot;text/javascript&quot; src=&quot;app.js&quot;>&lt;/script>
+&lt;/head>
+&lt;body onload=&quot;main()&quot;>
+    &lt;div id=&quot;canvas&quot;>&lt;/div>
+&lt;/body>
+&lt;/html></code></pre><p>The result is</p>
+<p><img src="http://www.angelluispg.es/AL3D/doc-al3d.png" alt="alt text" title="Logo Title Text 1"></p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AL3D.AcidMetalEffect.html">AcidMetalEffect</a></li><li><a href="AL3D.AmbientLight.html">AmbientLight</a></li><li><a href="AL3D.BasicMaterial.html">BasicMaterial</a></li><li><a href="AL3D.BlinnMaterial.html">BlinnMaterial</a></li><li><a href="AL3D.Camera.html">Camera</a></li><li><a href="AL3D.ChristmasEffect.html">ChristmasEffect</a></li><li><a href="AL3D.CoolEffect.html">CoolEffect</a></li><li><a href="AL3D.DirectionalLight.html">DirectionalLight</a></li><li><a href="AL3D.DreamVisionEffect.html">DreamVisionEffect</a></li><li><a href="AL3D.EdgeDetectionEffect.html">EdgeDetectionEffect</a></li><li><a href="AL3D.EffectBasedOnKernel.html">EffectBasedOnKernel</a></li><li><a href="AL3D.Exp2Fog.html">Exp2Fog</a></li><li><a href="AL3D.ExpFog.html">ExpFog</a></li><li><a href="AL3D.EyeFishEffect.html">EyeFishEffect</a></li><li><a href="AL3D.Fire2Effect.html">Fire2Effect</a></li><li><a href="AL3D.FireEffect.html">FireEffect</a></li><li><a href="AL3D.GaussianBlurEffect.html">GaussianBlurEffect</a></li><li><a href="AL3D.GreyScaleEffect.html">GreyScaleEffect</a></li><li><a href="AL3D.LambertMaterial.html">LambertMaterial</a></li><li><a href="AL3D.LenEffect.html">LenEffect</a></li><li><a href="AL3D.Light.html">Light</a></li><li><a href="AL3D.LinearFog.html">LinearFog</a></li><li><a href="AL3D.Material.html">Material</a></li><li><a href="AL3D.Mesh.html">Mesh</a></li><li><a href="AL3D.NegativeEffect.html">NegativeEffect</a></li><li><a href="AL3D.NightEffect.html">NightEffect</a></li><li><a href="AL3D.Object3D.html">Object3D</a></li><li><a href="AL3D.OrthographicCamera.html">OrthographicCamera</a></li><li><a href="AL3D.PerspectiveCamera.html">PerspectiveCamera</a></li><li><a href="AL3D.PhongMaterial.html">PhongMaterial</a></li><li><a href="AL3D.Picker.html">Picker</a></li><li><a href="AL3D.PixelationEffect.html">PixelationEffect</a></li><li><a href="AL3D.PointLight.html">PointLight</a></li><li><a href="AL3D.PosterizationEffect.html">PosterizationEffect</a></li><li><a href="AL3D.RadialBlurEffect.html">RadialBlurEffect</a></li><li><a href="AL3D.Renderer.html">Renderer</a></li><li><a href="AL3D.Scene.html">Scene</a></li><li><a href="AL3D.SepiaEffect.html">SepiaEffect</a></li><li><a href="AL3D.SharpenEffect.html">SharpenEffect</a></li><li><a href="AL3D.SkyBox.html">SkyBox</a></li><li><a href="AL3D.SpotLight.html">SpotLight</a></li><li><a href="AL3D.SunsetEffect.html">SunsetEffect</a></li><li><a href="AL3D.Texture.html">Texture</a></li><li><a href="AL3D.TextureManager.html">TextureManager</a></li><li><a href="AL3D.ToonMaterial.html">ToonMaterial</a></li><li><a href="ALMath.Matrix3.html">Matrix3</a></li><li><a href="ALMath.Matrix4.html">Matrix4</a></li><li><a href="ALMath.Quaternion.html">Quaternion</a></li><li><a href="ALMath.Vector2.html">Vector2</a></li><li><a href="ALMath.Vector3.html">Vector3</a></li><li><a href="ALMath.Vector4.html">Vector4</a></li></ul><h3>Namespaces</h3><ul><li><a href="AL3D.html">AL3D</a></li><li><a href="ALMath.html">ALMath</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Jan 01 2017 00:21:42 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,3 +1,8 @@
+/**
+ * Namespace where live all classes and function related to Math.
+ *
+ * @namespace
+ */
 var ALMath = {
 	version : "0.2 {Angel Luis Math Library}",
 	license: "The MIT License (MIT) \
@@ -29,17 +34,47 @@ var ALMath = {
 	}
 }
 
+/**
+ * Class that represent a 2 dimensional vector.
+ *
+ * @class
+ * @author Ángel Luis Perales Gómez
+
+ * @param {number} x - X coordinate.
+ * @param {number} y - Y coordinate.
+ */
 ALMath.Vector2 = function(x,y){
 	this.x = x || 0;
 	this.y = y || 0;
 }
 
+/**
+ * Class that represent a 3 dimensional vector.
+ *
+ * @class
+ * @author Ángel Luis Perales Gómez
+
+ * @param {number} x - X coordinate.
+ * @param {number} y - Y coordinate.
+ * @param {number} z - Z coordinate.
+ */
 ALMath.Vector3 = function(x,y,z){
 	this.x = x || 0;
 	this.y = y || 0;
 	this.z = z || 0;
 }
 
+/**
+ * Class that represent a 4 dimensional vector.
+ *
+ * @class
+ * @author Ángel Luis Perales Gómez
+
+ * @param {number} x - X coordinate.
+ * @param {number} y - Y coordinate.
+ * @param {number} z - Z coordinate.
+ * @param {number} w - W coordinate.
+ */
 ALMath.Vector4 = function(x,y,z,w){
 	this.x = x || 0;
 	this.y = y || 0;
@@ -47,7 +82,17 @@ ALMath.Vector4 = function(x,y,z,w){
 	this.w = w===undefined?1:w;
 }
 
+/**
+ * Class that represent a quaternion.
+ *
+ * @class
+ * @author Ángel Luis Perales Gómez
 
+ * @param {number} x - X coordinate.
+ * @param {number} y - Y coordinate.
+ * @param {number} z - Z coordinate.
+ * @param {number} w - W coordinate.
+ */
 ALMath.Quaternion = function ( x, y, z, w ) {
 
 	this.x = x || 0;
@@ -57,6 +102,12 @@ ALMath.Quaternion = function ( x, y, z, w ) {
 
 };
 
+/**
+ * Class that represent a 3x3 matrix.
+ *
+ * @class
+ * @author Ángel Luis Perales Gómez
+ */
 ALMath.Matrix3 = function(){
 	this.components = new Float32Array([
 		1,0,0,
@@ -65,6 +116,12 @@ ALMath.Matrix3 = function(){
 	]);
 }
 
+/**
+ * Class that represent a 4x4 matrix.
+ *
+ * @class
+ * @author Ángel Luis Perales Gómez
+ */
 ALMath.Matrix4 = function(){
 	this.components = new Float32Array([
 		1,0,0,0,
@@ -75,31 +132,81 @@ ALMath.Matrix4 = function(){
 }
 
 ALMath.Vector2.prototype = {
-
+	/**
+   	 * Function to add vector v.
+   	 *
+   	 * @param {ALMath.Vector2} v - Vector to add.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the sum between this and v.
+   	 */
 	add : function(v){
 		return new ALMath.Vector2(this.x+v.x, this.y+v.y);
 	},
 
+	/**
+   	 * Function to add scalar n.
+   	 *
+   	 * @param {number} n - Scalar to add.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the sum between each component of this and scalar n.
+   	 */
 	addScalar : function(n){
 		return new ALMath.Vector2(this.x+n, this.y+n);
 	},
 
+	/**
+   	 * Function to substract vector v.
+   	 *
+   	 * @param {ALMath.Vector2} v - Vector to substract.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the substract between this and v.
+   	 */
 	sub : function(v){
 		return new ALMath.Vector2(this.x-v.x, this.y-v.y);
 	},
 
+	/**
+   	 * Function to substract scalar n.
+   	 *
+   	 * @param {number} v - Scalar to substract.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the substract between each component of this and scalar n.
+   	 */
 	subScalar : function(n){
 		return new ALMath.Vector2(this.x-n, this.y-n);
 	},
 
+	/**
+   	 * Function to multipy by vector v.
+   	 *
+   	 * @param {ALMath.Vector2} v - Vector to multiply.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the multiplication between this and v.
+   	 */
 	multiply : function(v){
 		return new ALMath.Vector2(this.x*v.x, this.y*v.y);
 	},
 
+	/**
+   	 * Function to multiply by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to multiply.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the multiplication between each component of this and scalar n.
+   	 */
 	multiplyByScalar : function(n){
 		return new ALMath.Vector2(this.x*n, this.y*n);
 	},
 
+	/**
+   	 * Function to divide by vector v.
+   	 *
+   	 * @param {ALMath.Vector2} v - Vector to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the divison between this and v.
+   	 */
 	divide : function(v){
 		if (v.x === 0 || v.y === 0){
 			throw new Error("ALMath.Vector2.divide(v): Division by zero.")
@@ -107,6 +214,15 @@ ALMath.Vector2.prototype = {
 		return new ALMath.Vector2(this.x/v.x, this.y/v.y);
 	},
 
+	/**
+   	 * Function to divide by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector which is the division between each component of this and scalar n.
+   	 */
 	divideByScalar : function(n){
 		if (n === 0){
 			throw new Error("ALMath.Vector2.divideByScalar(n): Division by zero.")
@@ -114,6 +230,14 @@ ALMath.Vector2.prototype = {
 		return new ALMath.Vector2(this.x/n, this.y/n);
 	},
 
+	/**
+   	 * Function to clamp between min and max.
+   	 *
+   	 * @param {number} min - Min value.
+   	 * @param {number} max - Max value.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector clamped between min and max.
+   	 */
 	clamp : function(min, max){
 		var x=this.x,y=this.y;
 		if ( this.x < min.x ) {
@@ -131,6 +255,11 @@ ALMath.Vector2.prototype = {
 		return new ALMath.Vector2(x,y);
 	},
 
+	/**
+   	 * Function to floor vector.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector floored.
+   	 */
 	floor: function () {
 		var x = Math.floor( this.x );
 		var y = Math.floor( this.y );
@@ -138,6 +267,11 @@ ALMath.Vector2.prototype = {
 		return ALMath.Vector2(this.x,this.y);
 	},
 
+	/**
+   	 * Function to ceil vector.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector ceiled.
+   	 */
 	ceil: function () {
 		var x = Math.ceil( this.x );
 		var y = Math.ceil( this.y );
@@ -145,6 +279,11 @@ ALMath.Vector2.prototype = {
 		return ALMath.Vector2(this.x,this.y);
 	},
 
+	/**
+   	 * Function to round between min and max.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector rounded.
+   	 */
 	round: function () {
 		var x = Math.round( this.x );
 		var x = Math.round( this.y );
@@ -152,26 +291,63 @@ ALMath.Vector2.prototype = {
 		return ALMath.Vector2(this.x,this.y);
 	},
 
+	/**
+   	 * Function to negate vector.
+   	 *
+   	 * @returns {ALMath.Vector2} - A new vector with each component negate.
+   	 */
 	negate: function () {
 		return ALMath.Vector2(-this.x,-this.y);
 	},
 
+	/**
+   	 * Function to compute dot product.
+   	 *
+   	 * @param {ALMath.Vector2} v - Vector to do the dot product.
+   	 *
+   	 * @returns {number} - Dot product between this and v.
+   	 */
 	dot: function ( v ) {
 		return this.x * v.x + this.y * v.y;
 	},
 
+	/**
+   	 * Function to compute length of the vector.
+   	 *
+   	 * @returns {number} - Vector length.
+   	 */
 	length: function () {
 		return Math.sqrt( this.x * this.x + this.y * this.y );
 	},
 
+	/**
+   	 * Function to normalize vector.
+   	 *
+   	 * @returns {number} - A new vector normalized.
+   	 */
 	normalize: function () {
 		return this.divideByScalar( this.length() );
 	},
 
+	/**
+   	 * Function to compute distance between vectors.
+   	 *
+   	 * @param {ALMath.Vector2} v - Vector to compute the distance.
+   	 *
+   	 * @returns {number} - Distance between this and v.
+   	 */
 	distanceTo: function ( v ) {
 		return Math.sqrt( (this.x - v.x) * (this.x - v.x) + (this.y - v.y) * (this.y - v.y) );
 	},
 
+	/**
+   	 * Function to set the vector components.
+   	 *
+   	 * @param {number} x - X component.
+   	 * @param {number} y - Y component.
+   	 *
+   	 * @returns {ALMath.Vector2} - this.
+   	 */
 	set : function(x, y){
 		this.x = x;
 		this.y = y;
@@ -179,10 +355,22 @@ ALMath.Vector2.prototype = {
 		return this;
 	},
 
+	/**
+   	 * Function to clone vectors.
+   	 *
+   	 * @returns {ALMath.Vector2} - A copy of this.
+   	 */
 	clone : function(){
 		return new ALMath.Vector2(this.x, this.y);
 	},
 
+	/**
+   	 * Function to compare vectors.
+   	 *
+   	 * @param {ALMath.Vector2} v - Vector to compare.
+   	 *
+   	 * @returns {boolean} - True if this and v are equals, false otherwise.
+   	 */
 	equals : function (v){
 		if ((!v instanceof ALMath.Vector2)){
 			return false;
@@ -193,30 +381,81 @@ ALMath.Vector2.prototype = {
 
 ALMath.Vector3.prototype = {
 
+	/**
+   	 * Function to add vector v.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to add.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the sum between this and v.
+   	 */
 	add : function(v){
 		return new ALMath.Vector3(this.x+v.x, this.y+v.y, this.z+v.z);
 	},
 
+	/**
+   	 * Function to add scalar n.
+   	 *
+   	 * @param {number} n - Scalar to add.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the sum between each component of this and scalar n.
+   	 */
 	addScalar : function(n){
 		return new ALMath.Vector3(this.x+n, this.y+n, this.z+n);
 	},
 
+	/**
+   	 * Function to substract vector v.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to substract.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the substract between this and v.
+   	 */
 	sub : function(v){
 		return new ALMath.Vector3(this.x-v.x, this.y-v.y, this.z-v.z);
 	},
 
+	/**
+   	 * Function to substract scalar n.
+   	 *
+   	 * @param {number} n - Scalar to substract.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the substract between each component of this and scalar n.
+   	 */
 	subScalar : function(n){
 		return new ALMath.Vector3(this.x-n, this.y-n, this.z-n);
 	},
 
+	/**
+   	 * Function to multipy by vector v.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to multiply.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the multiplication between this and v.
+   	 */
 	multiply : function(v){
 		return new ALMath.Vector3(this.x*v.x, this.y*v.y, this.z*v.z);
 	},
 
+	/**
+   	 * Function to multiply by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to multiply.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the multiplication between each component of this and scalar n.
+   	 */
 	multiplyByScalar : function(n){
 		return new ALMath.Vector3(this.x*n, this.y*n, this.z*n);
 	},
 
+	/**
+   	 * Function to divide by vector v.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the divison between this and v.
+   	 */
 	divide : function(v){
 		if (v.x === 0 || v.y === 0 || v.z === 0){
 			throw new Error("ALMath.Vector3.divide(v): Division by zero.")
@@ -224,6 +463,15 @@ ALMath.Vector3.prototype = {
 		return new ALMath.Vector3(this.x/v.x, this.y/v.y, this.z/v.z);
 	},
 
+	/**
+   	 * Function to divide by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the division between each component of this and scalar n.
+   	 */
 	divideByScalar : function(n){
 		if (n === 0){
 			throw new Error("ALMath.Vector3.divideByScalar(n): Division by zero.")
@@ -231,6 +479,14 @@ ALMath.Vector3.prototype = {
 		return new ALMath.Vector3(this.x/n, this.y/n, this.z/n);
 	},
 
+	/**
+   	 * Function to clamp between min and max.
+   	 *
+   	 * @param {number} min - Min value.
+   	 * @param {number} max - Max value.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector clamped between min and max.
+   	 */
 	clamp : function(min, max){
 		var x = this.x;
 		var y = this.y;
@@ -256,6 +512,11 @@ ALMath.Vector3.prototype = {
 		return new ALMath.Vector3(x,y,z);
 	},
 
+	/**
+   	 * Function to floor vector.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector floored.
+   	 */
 	floor : function () {
 		var x = Math.floor( this.x );
 		var y = Math.floor( this.y );
@@ -264,6 +525,11 @@ ALMath.Vector3.prototype = {
 		return new ALMath.Vector3(x,y,z);
 	},
 
+	/**
+   	 * Function to ceil vector.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector ceiled.
+   	 */
 	ceil : function () {
 		var x = Math.ceil( this.x );
 		var y = Math.ceil( this.y );
@@ -272,6 +538,11 @@ ALMath.Vector3.prototype = {
 		return new ALMath.Vector3(x,y,z);
 	},
 
+	/**
+   	 * Function to round between min and max.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector rounded.
+   	 */
 	round : function () {
 		var x = Math.round( this.x );
 		var y = Math.round( this.y );
@@ -280,14 +551,33 @@ ALMath.Vector3.prototype = {
 		return new ALMath.Vector3(x,y,z);
 	},
 
+	/**
+   	 * Function to negate vector.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector with each component negate.
+   	 */
 	negate : function () {
 		return new ALMath.Vector3(-this.x, -this.y, -this.z);
 	},
 
+	/**
+   	 * Function to compute dot product.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to do the dot product.
+   	 *
+   	 * @returns {number} - Dot product between this and v.
+   	 */
 	dot : function ( v ) {
 		return this.x * v.x + this.y * v.y + this.z * v.z;
 	},
 
+	/**
+   	 * Function to compute cross product.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to do the cross product.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector with the cross product between this and v.
+   	 */
 	cross : function(v){
 		var x = this.x, y = this.y, z = this.z;
 
@@ -298,38 +588,86 @@ ALMath.Vector3.prototype = {
 		return new ALMath.Vector3(nx,ny,nz);
 	},
 
+	/**
+   	 * Function to compute length of the vector.
+   	 *
+   	 * @returns {number} - Vector length.
+   	 */
 	length : function () {
 		// Maybe it could be : return Math.sqrt( this.dot(this) );
 		return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z );
 	},
 
+	/**
+   	 * Function to compute square length of the vector.
+   	 *
+   	 * @returns {number} - Vector square length.
+   	 */
 	squareLength : function () {
 		// Maybe it could be : return this.dot(this);
 		return this.x * this.x + this.y * this.y + this.z * this.z;
 	},
 
+	/**
+   	 * Function to normalize vector.
+   	 *
+   	 * @returns {number} - A new vector normalized.
+   	 */
 	normalize : function () {
 		return this.divideByScalar( this.length() );
 	},
 
+	/**
+   	 * Function to compute distance between vectors.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to compute the distance.
+   	 *
+   	 * @returns {number} - Distance between this and v.
+   	 */
 	distanceTo : function ( v ) {
 		return Math.sqrt( (this.x - v.x) * (this.x - v.x) + (this.y - v.y) * (this.y - v.y) + (this.z - v.z) * (this.z - v.z ));
 	},
 
+	/**
+   	 * Function to set the vector components.
+   	 *
+   	 * @param {number} x - X component.
+   	 * @param {number} y - Y component.
+   	 * @param {number} z - Z component.
+   	 *
+   	 * @returns {ALMath.Vector3} - this.
+   	 */
 	set : function(x, y, z){
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	},
 
+	/**
+   	 * Function to get the vector in format that WebGL understands.
+   	 *
+   	 * @returns {Float32Array} - A Float32Array with x, y and z.
+   	 */
 	getForGL : function (){
 		return new Float32Array([this.x, this.y, this.z]);
 	},
 
+	/**
+   	 * Function to clone vectors.
+   	 *
+   	 * @returns {ALMath.Vector3} - A copy of this.
+   	 */
 	clone : function(){
 		return new ALMath.Vector3(this.x, this.y, this.z);
 	},
 
+	/**
+   	 * Function to compare vectors.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to compare.
+   	 *
+   	 * @returns {boolean} - true if this and v are equals, false otherwise.
+   	 */
 	equals : function (v){
 		if (!(v instanceof ALMath.Vector3)){
 			return false;
@@ -340,30 +678,81 @@ ALMath.Vector3.prototype = {
 
 ALMath.Vector4.prototype = {
 
+	/**
+   	 * Function to add vector v.
+   	 *
+   	 * @param {ALMath.Vector4} v - vector to add.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the sum between this and v.
+   	 */
 	add : function(v){
 		return new ALMath.Vector4(this.x+v.x,this.y+v.y,this.z+v.z,this.w+v.w);
 	},
 
+	/**
+   	 * Function to add scalar n.
+   	 *
+   	 * @param {number} n - Scalar to add.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the sum between each component of this and scalar n.
+   	 */
 	addScalar : function(n){
 		return new ALMath.Vector4(this.x+n,this.y+n,this.z+n,this.w+n);
 	},
 
+	/**
+   	 * Function to substract vector v.
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to substract.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the substract between this and v.
+   	 */
 	sub : function(v){
 		return new ALMath.Vector4(this.x-v.x,this.y-v.y,this.z-v.z,this.w-v.w);
 	},
 
+	/**
+   	 * Function to substract scalar n.
+   	 *
+   	 * @param {number} n - Scalar to substract.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the substract between each component of this and scalar n.
+   	 */
 	subScalar : function(n){
 		return new ALMath.Vector4(this.x-n,this.y-n,this.z-n,this.w-n);
 	},
 
+	/**
+   	 * Function to multipy by vector v.
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to multiply.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the multiplication between this and v.
+   	 */
 	multiply : function(v){
 		return new ALMath.Vector4(this.x*v.x,this.y*v.y,this.z*v.z,this.w*v.w);
 	},
 
+	/**
+   	 * Function to multiply by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to multiply.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the multiplication between each component of this and scalar n.
+   	 */
 	multiplyByScalar : function(n){
 		return new ALMath.Vector4(this.x*n,this.y*n,this.z*n,this.w*n);
 	},
 
+	/**
+   	 * Function to divide by vector v.
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the divison between this and v.
+   	 */
 	divide : function(v){
 		if (v.x === 0 || v.y === 0 || v.z === 0 || v.w === 0){
 			throw new Error("ALMath.Vector4.divide(v): Division by zero.")
@@ -371,6 +760,15 @@ ALMath.Vector4.prototype = {
 		return new ALMath.Vector4(this.x/v.x,this.y/v.y,this.z/v.z,this.w/v.w);
 	},
 
+	/**
+   	 * Function to divide by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the division between each component of this and scalar n.
+   	 */
 	divideByScalar : function(n){
 		if (n === 0){
 			throw new Error("ALMath.Vector4.divideByScalar(n): Division by zero.")
@@ -378,6 +776,14 @@ ALMath.Vector4.prototype = {
 		return new ALMath.Vector4(this.x/n,this.y/n,this.z/n,this.w/n);
 	},
 
+	/**
+   	 * Function to clamp between min and max.
+   	 *
+   	 * @param {number} min - Min value.
+   	 * @param {number} max - Max value.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector clamped between min and max.
+   	 */
 	clamp : function(min, max){
 		var x = this.x;
 		var y = this.y;
@@ -410,6 +816,11 @@ ALMath.Vector4.prototype = {
 		return new ALMath.Vector4(x,y,z,w);
 	},
 
+	/**
+   	 * Function to floor vector.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector floored.
+   	 */
 	floor : function () {
 		var x = Math.floor( this.x );
 		var y = Math.floor( this.y );
@@ -419,6 +830,11 @@ ALMath.Vector4.prototype = {
 		return new ALMath.Vector4(x,y,z,w);
 	},
 
+	/**
+   	 * Function to ceil vector.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector ceiled.
+   	 */
 	ceil : function () {
 		var x = Math.ceil( this.x );
 		var y = Math.ceil( this.y );
@@ -428,6 +844,11 @@ ALMath.Vector4.prototype = {
 		return new ALMath.Vector4(x,y,z,w);
 	},
 
+	/**
+   	 * Function to round between min and max.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector rounded.
+   	 */
 	round : function () {
 		var x = Math.round( this.x );
 		var y = Math.round( this.y );
@@ -437,27 +858,66 @@ ALMath.Vector4.prototype = {
 		return new ALMath.Vector4(x,y,z,w);
 	},
 
+	/**
+   	 * Function to negate vector.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector with each component negate.
+   	 */
 	negate : function () {
 		return new ALMath.Vector4(-this.x,-this.y,-this.z,-this.w);
 	},
 
+	/**
+   	 * Function to compute dot product.
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to do the dot product.
+   	 *
+   	 * @returns {number} - Dot product between this and v.
+   	 */
 	dot : function ( v ) {
 		return this.x * v.x + this.y * v.y + this.z * v.z + this.w * v.w;
 	},
 
+	/**
+   	 * Function to compute length of the vector.
+   	 *
+   	 * @returns {number} - Vector length.
+   	 */
 	length : function () {
 		// Maybe it could be : return Math.sqrt( this.dot(this) );
 		return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w );
 	},
 
+	/**
+   	 * Function to normalize vector.
+   	 *
+   	 * @returns {number} - A new vector normalized.
+   	 */
 	normalize : function () {
 		return this.divideByScalar( this.length() );
 	},
 
+	/**
+   	 * Function to compute distance between vectors.
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to compute the distance.
+   	 *
+   	 * @returns {number} - Distance between this and v.
+   	 */
 	distanceTo : function ( v ) {
 		return Math.sqrt( (this.x - v.x) * (this.x - v.x) + (this.y - v.y) * (this.y - v.y) + (this.z - v.z) * (this.z - v.z ) + (this.w - v.w) * (this.w - v.w ));
 	},
 
+	/**
+   	 * Function to set the vector components.
+   	 *
+   	 * @param {number} x - X component.
+   	 * @param {number} y - Y component.
+   	 * @param {number} z - Z component.
+   	 * @param {number} w - W component.
+   	 *
+   	 * @returns {ALMath.Vector3} - this.
+   	 */
 	set : function(x, y, z, w){
 		this.x = x;
 		this.y = y;
@@ -465,14 +925,31 @@ ALMath.Vector4.prototype = {
 		this.w = w;
 	},
 
+	/**
+   	 * Function to get the vector in format that WebGL understands.
+   	 *
+   	 * @returns {Float32Array} - A Float32Array with x, y, z and w.
+   	 */
 	getForGL : function(){
 		return new Float32Array([this.x, this.y, this.z, this.w]);
 	},
 
+	/**
+   	 * Function to clone vectors.
+   	 *
+   	 * @returns {ALMath.Vector4} - A copy of this.
+   	 */
 	clone : function(){
 		return new ALMath.Vector3(this.x, this.y, this.z, this.w);
 	},
 
+	/**
+   	 * Function to compare vectors.
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to compare.
+   	 *
+   	 * @returns {boolean} - true if this and v are equals, false otherwise.
+   	 */
 	equals : function (v){
 		if (!(v instanceof ALMath.Vector4)){
 			return false;
@@ -482,10 +959,21 @@ ALMath.Vector4.prototype = {
 }
 
 ALMath.Quaternion.prototype = {
+
+	/**
+	 * Function to compute the length of the quaternion.
+	 *
+	 *	@returns {number} - Lenght of the quaternion.
+	 */
 	lenght : function(){
 		return Math.sqrt( this.x * this.x + this.y * this.y + this.z * this.z + this.w * this.w );
 	},
 
+	/**
+   	 * Function to normalize quaternion.
+   	 *
+   	 * @returns {number} - A new quaternion normalized.
+   	 */
 	normalize : function(){
 		var d = this.length();
 		var x,y,z,w;
@@ -504,6 +992,13 @@ ALMath.Quaternion.prototype = {
 		return new ALMath.Quaternion(x,y,z,w);
 	},
 
+	/*
+	 * Function to multiply two quaternions.
+	 *
+	 * @param {ALMath.Quaternion} q - Quaternion to multiply.
+	 *
+	 * @returns {ALMath.Quaternion} - A new quaternion result of multiply this by q.
+	 */
 	multiply : function(q){
 		var nx,ny,nz,nw;
 		nw = this.w*q.w - this.x*q.x - this.y*q.y - this.z*q.z;
@@ -514,14 +1009,29 @@ ALMath.Quaternion.prototype = {
 		return new ALMath.Quaternion(nx,ny,nz,nw);
 	},
 
+	/**
+	 * Function to conjugate the quaternion.
+	 *
+	 * @returns {ALMath.Quaternion} - A new quaternion conjugated.
+	 */
 	conjugate : function (){
 		return new ALMath.Quaternion(-this.x, -this.y, -this.z, this.w);
 	},
 
+	/**
+	 * Function to get the inverse of quaternion.
+	 *
+	 * @returns {ALMath.Quaternion} - A new quaternion conjugated.
+	 */
 	inverse : function (){
 		return this.conjugate().normalize();
 	},
 
+	/**
+	 * Function to get matrix rotation from quaternion.
+	 *
+	 * @returns {ALMath.Matrix4} - A 4x4 rotation matrix.
+	 */
 	getMatrix : function (){
 		var n11 = 1-2*this.y*this.y-2*this.z*this.z,
 			n12 = 2*this.x*this.y + 2*this.w*this.z,
@@ -542,6 +1052,13 @@ ALMath.Quaternion.prototype = {
 		return matrix;
 	},
 
+	/**
+	 * Function to create a quaternion from Euler's angles.
+	 *
+	 * @param {ALMath.Vector3} v - Vector with the Euler's angles rotation in degrees.
+	 *
+	 * @returns {ALMath.Quaternion} - A quaternion seted from the Euler's angles
+	 */
 	setFromEuler : function(v){
 		var c = new ALMath.Vector3();
 		c.x = ALMath.degToRad(v.x);
@@ -560,32 +1077,12 @@ ALMath.Quaternion.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to get the Euler's angles from the quaternion.
+	 *
+	 * @returns {ALMath.Vector3} - A vector with the Euler's angles.
+	 */
 	getEuler : function (){
-		/*var p = Math.asin(-2*(this.y*this.z - this.w*this.x));
-		var h,b;
-		if (Math.cos(p)===0){
-			h = Math.atan2(-this.x*this.z + this.w*this.y, 0.5 - this.y*this.y - this.z*this.z);
-			b = 0;
-		}else{
-			h = Math.atan2(this.x*this.z + this.w*this.y, 0.5 - this.x*this.x - this.y*this.y);
-			b = Math.atan2(this.x*this.y + this.w*this.z, 0.5 - this.x*this.x - this.z*this.z);
-		}
-		//p = (p > 0 ? p : (2*Math.PI + p)) * 360 / (2*Math.PI);
-		//h = (h > 0 ? h : (2*Math.PI + h)) * 360 / (2*Math.PI);
-		//b = (b > 0 ? b : (2*Math.PI + b)) * 360 / (2*Math.PI);
-		//p = ALMath.radToDeg(p);
-		if (p < 0){
-			p+=360;
-		}
-		//h = ALMath.radToDeg(h);
-		if (h < 0){
-			h+=360;
-		}
-		//b = ALMath.radToDeg(b);
-		if (b < 0){
-			b+=360;
-		}*/
-
 		p = -2*(this.y*this.z - this.w*this.x);
 		if (Math.abs(p)>0.9999){
 			p = 1.570796*p;
@@ -602,6 +1099,21 @@ ALMath.Quaternion.prototype = {
 
 ALMath.Matrix3.prototype = {
 
+	/**
+   	 * Function to set each component.
+   	 * 
+   	 * Set the component in row major order.
+   	 *
+   	 * @param {number} n11 - component for row 1 column 1.
+   	 * @param {number} n12 - component for row 1 column 2.
+   	 * @param {number} n13 - component for row 1 column 3.
+   	 * @param {number} n21 - component for row 2 column 1.
+   	 * @param {number} n22 - component for row 2 column 2.
+   	 * @param {number} n23 - component for row 2 column 3.
+   	 * @param {number} n31 - component for row 3 column 1.
+   	 * @param {number} n32 - component for row 3 column 2.
+   	 * @param {number} n33 - component for row 3 column 3.
+   	 */
 	set : function(n11,n12,n13,n21,n22,n23,n31,n32,n33){
 		var c = this.components;
 		c[0] = n11;
@@ -615,6 +1127,9 @@ ALMath.Matrix3.prototype = {
 		c[8] = n33;
 	},
 
+	/**
+   	 * Function to set this matrix to the identity matrix.
+   	 */
 	identity : function(){
 		this.set(
 			1, 0, 0,
@@ -623,11 +1138,25 @@ ALMath.Matrix3.prototype = {
 		);
 	},
 
+	/**
+   	 * Function to multiply by vector v.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to multiply.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the multiplication between the matrix this and the vector v.
+   	 */
 	multiplyByVector : function(v){
 		var c = this.components;
 		return new ALMath.Vector3(c[0]*v.x+c[1]*v.y+c[2]*v.z, c[3]*v.x+c[4]*v.y+c[5]*v.z, c[6]*v.x+c[7]*v.y+c[8]*v.z);
 	},
 
+	/**
+   	 * Function to multiply by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to multiply.
+   	 *
+   	 * @returns {ALMath.Matrix3} - this that is the multiplication between this and scalar n.
+   	 */
 	multiplyByScalar : function(n){
 		var c = this.components;
 
@@ -644,6 +1173,15 @@ ALMath.Matrix3.prototype = {
 		return this;
 	},
 
+	/**
+   	 * Function to divide by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Matrix3} - this that is the division between this and scalar n.
+   	 */
 	divideByScalar : function (n){
 		if (n === 0){
 			throw new Error("ALMath.Matrix3.divideByScalar(n): Division by zero.")
@@ -662,11 +1200,21 @@ ALMath.Matrix3.prototype = {
 		return this;
 	},
 
+	/**
+   	 * Function to compute the matrix determinant.
+   	 *
+   	 * @returns {number} - The determinant of this.
+   	 */
 	determinant : function(){
 		var c = this.components;
 		return c[0]*c[4]*c[8]-c[0]*c[5]*c[7]-c[1]*c[3]*c[8]+c[1]*c[5]*c[6]+c[1]*c[3]*c[7]-c[2]*c[4]*c[6];
 	},
 
+	/**
+   	 * Function to transpose matrix.
+   	 *
+   	 * @returns {ALMath.Matrix3} - this that is the transpose matrix.
+   	 */
 	transpose : function () {
 		var t, c = this.components;
 
@@ -684,6 +1232,14 @@ ALMath.Matrix3.prototype = {
 
 		return this;
 	},
+
+	/**
+   	 * Function to compute matrix inverse.
+   	 *
+   	 * @throws Singular matrix. The matrix hasn't inverse.
+   	 *
+   	 * @returns {ALMath.Matrix3} - this that is the invert matrix.
+   	 */
 	inverse: function () {
 		var c = this.components;
 		var n11 = c[4]*c[8] - c[5]*c[7],
@@ -712,12 +1268,23 @@ ALMath.Matrix3.prototype = {
 		return this;
 	},
 	
+	/**
+   	 * Function clone a matrix.
+   	 *
+   	 * @returns {ALMath.Matrix3} - A copy of this.
+   	 */
 	clone : function(){
 		c = this.components;
 		cloned = new ALMath.Matrix3();
 		cloned.set(c[0],c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8]);
+		return cloned;
 	},
 
+	/**
+   	 * Function compare two matrices.
+   	 *
+   	 * @returns {boolean} - true if this and v are equals, false otherwise.
+   	 */
 	equals : function (m){
 		if (!(m instanceof ALMath.Matrix3)){
 			return false;
@@ -734,6 +1301,28 @@ ALMath.Matrix3.prototype = {
 
 ALMath.Matrix4.prototype = {
 
+	/**
+   	 * Function to set each component.
+   	 * 
+   	 * Set the component in row major order.
+   	 *
+   	 * @param {number} n11 - component for row 1 column 1.
+   	 * @param {number} n12 - component for row 1 column 2.
+   	 * @param {number} n13 - component for row 1 column 3.
+   	 * @param {number} n14 - component for row 1 column 4.
+   	 * @param {number} n21 - component for row 2 column 1.
+   	 * @param {number} n22 - component for row 2 column 2.
+   	 * @param {number} n23 - component for row 2 column 3.
+   	 * @param {number} n24 - component for row 2 column 4.
+   	 * @param {number} n31 - component for row 3 column 1.
+   	 * @param {number} n32 - component for row 3 column 2.
+   	 * @param {number} n33 - component for row 3 column 3.
+   	 * @param {number} n34 - component for row 3 column 4.
+   	 * @param {number} n41 - component for row 4 column 1.
+   	 * @param {number} n42 - component for row 4 column 2.
+   	 * @param {number} n43 - component for row 4 column 3.
+   	 * @param {number} n44 - component for row 4 column 4.
+   	 */
 	set : function ( n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44 ) {
 		var c = this.components;
 
@@ -754,7 +1343,11 @@ ALMath.Matrix4.prototype = {
 		c[14] = n34;
 		c[15] = n44;
 	},
-
+	/**
+   	 * Function to set this matrix to the identity matrix.
+   	 *
+   	 * @returns {ALMath.Matrix4} Identity Matrix.
+   	 */
 	identity : function () {
 		this.set(
 			1, 0, 0, 0,
@@ -762,8 +1355,10 @@ ALMath.Matrix4.prototype = {
 			0, 0, 1, 0,
 			0, 0, 0, 1
 		);
+		return this;
 	},
 
+	
 	multiply: function ( m ) {
 
 		var o = m.components;
@@ -799,6 +1394,13 @@ ALMath.Matrix4.prototype = {
 		return result;
 	},
 
+	/**
+   	 * Function to multiply by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to multiply.
+   	 *
+   	 * @returns {ALMath.Matrix4} - this that is the multiplication between this and scalar n.
+   	 */
 	multiplyByScalar : function ( n ) {
 		var c = this.components;
 
@@ -822,11 +1424,14 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+   	 * Function to multiply by vector v.
+   	 *
+   	 * @param {ALMath.Vector3} v - Vector to multiply.
+   	 *
+   	 * @returns {ALMath.Vector3} - A new vector which is the multiplication between the matrix this and the vector v.
+   	 */
 	multiplyByVector : function (v){
-		/*var vector = v;
-		if (v instanceof ALMath.Vector3){
-			vector = new ALMath.Vector4(v.x,v.y,v.z,0);
-		}*/
 		var result,nx,ny,nz;
 		var c = this.components;
 		nx = c[0]*v.x+c[4]*v.y+c[8]*v.z+c[12];
@@ -835,30 +1440,37 @@ ALMath.Matrix4.prototype = {
 		return new ALMath.Vector3(nx,ny,nz);
 	},
 
+	/**
+   	 * Function to multiply by vector v.
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to multiply.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the multiplication between the matrix this and the vector v.
+   	 */
 	multiplyByVector4 : function (v){
-		/*var vector = v;
+		var vector = v;
 		if (v instanceof ALMath.Vector3){
 			vector = new ALMath.Vector4(v.x,v.y,v.z,0);
-		}*/
+		}
 		var result,nx,ny,nz,nw;
 		var c = this.components;
 		nx = c[0]*v.x+c[4]*v.y+c[8]*v.z+c[12]*v.w;
 		ny = c[1]*v.x+c[5]*v.y+c[9]*v.z+c[13]*v.w;
 		nz = c[2]*v.x+c[6]*v.y+c[10]*v.z+c[14]*v.w;
 		nw = c[3]*v.x+c[7]*v.y+c[11]*v.z+c[15]*v.w;
-		/*nx = c[0]*v.x+c[1]*v.y+c[2]*v.z+c[3]*v.w;
-		ny = c[4]*v.x+c[5]*v.y+c[6]*v.z+c[7]*v.w;
-		nz = c[8]*v.x+c[9]*v.y+c[10]*v.z+c[11]*v.w;
-		nw = c[12]*v.x+c[13]*v.y+c[14]*v.z+c[15]*v.w;*/
 		return new ALMath.Vector4(nx,ny,nz,nw);
 	},
 
+	/**
+   	 * Function to transform a vector v by matrix this.
+   	 *
+   	 * The difference between transformPoint and multiplyByVector is that transformPoint do the perspective division
+   	 *
+   	 * @param {ALMath.Vector4} v - Vector to multiply.
+   	 *
+   	 * @returns {ALMath.Vector4} - A new vector which is the multiplication between the matrix this and the vector v.
+   	 */
 	transformPoint : function(v){
-		//var vec4 = this.multiplyByVector(v);
-		/*vec4.x = vec4.x / vec4.w;
-		vec4.y = vec4.y / vec4.w;
-		vec4.z = vec4.z / vec4.w;
-		vec4.w = 1;*/
 		var m = this.components;
 
 		var dst = new ALMath.Vector3();
@@ -875,6 +1487,15 @@ ALMath.Matrix4.prototype = {
 
 	},
 
+	/**
+   	 * Function to divide by scalar n.
+   	 *
+   	 * @param {number} n - Scalar to divide.
+   	 *
+   	 * @throws Division by zero.
+   	 *
+   	 * @returns {ALMath.Vector4} - this that is the division between this and scalar n.
+   	 */
 	divideByScalar : function ( n ) {
 		if (n === 0){
 			throw new Error("ALMath.Matrix4.divideByScalar(n): Division by zero.")
@@ -901,6 +1522,11 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+   	 * Function to transpose matrix.
+   	 *
+   	 * @returns {ALMath.Matrix4} - this that is the transpose matrix.
+   	 */
 	transpose : function () {
 		var c = this.components;
 		var t;
@@ -932,6 +1558,15 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to create a translation matrix.
+	 *
+	 * @param {number} x - X component of translation matrix.
+	 * @param {number} y - Y component of translation matrix.
+	 * @param {number} z - Z component of translation matrix.
+	 *
+	 * @returns {ALMath.Matrix4} - A translation matrix.
+	 */
 	translate : function ( x, y, z ) {
 		this.set(
 			1, 0, 0, x,
@@ -943,6 +1578,13 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to create a rotation matrix on X axis.
+	 *
+	 * @param {number} theta - rotation angle in degrees  on X axis.
+	 *
+	 * @returns {ALMath.Matrix4} - A rotation matrix on X axis.
+	 */
 	rotateX : function ( theta ) {
 		var c = Math.cos( theta ), s = Math.sin( theta );
 		this.set(
@@ -955,6 +1597,13 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to create a rotation matrix on Y axis.
+	 *
+	 * @param {number} theta - rotation angle in degrees  on Y axis.
+	 *
+	 * @returns {ALMath.Matrix4} - A rotation matrix on Y axis.
+	 */
 	rotateY : function ( theta ) {
 		var c = Math.cos( theta ), s = Math.sin( theta );
 		this.set(
@@ -967,6 +1616,13 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to create a rotation matrix on Z axis.
+	 *
+	 * @param {number} theta - rotation angle in degrees  on Z axis.
+	 *
+	 * @returns {ALMath.Matrix4} - A rotation matrix on Z axis.
+	 */
 	rotateZ : function ( theta ) {
 		var c = Math.cos( theta ), s = Math.sin( theta );
 		this.set(
@@ -979,6 +1635,15 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to create a rotation matrix on (X,Y,Z) axis.
+	 *
+	 * @param {number} x - rotation angle in degrees on X axis.
+	 * @param {number} y - rotation angle in degrees  on Y axis.
+	 * @param {number} z - rotation angle in degrees  on Z axis.
+	 *
+	 * @returns {ALMath.Matrix4} - A rotation matrix on (X,Y,Z) axis.
+	 */
 	rotate : function ( x, y, z ) {
 		var rx, ry, rz, r;
 		rx = new ALMath.Matrix4();
@@ -992,6 +1657,15 @@ ALMath.Matrix4.prototype = {
 		return r;
 	},
 
+	/**
+	 * Function to create a scale matrix.
+	 *
+	 * @param {number} x - scale factor on X axis.
+	 * @param {number} y - scale factor on Y axis.
+	 * @param {number} z - scale factor on Z axis.
+	 *
+	 * @returns {ALMath.Matrix4} - A scale matrix.
+	 */
 	scale : function ( x, y, z ) {
 		this.set(
 			x, 0, 0, 0,
@@ -1003,6 +1677,18 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to create a orthographic projection matrix.
+	 *
+	 * @params {number} left - Frustum left.
+	 * @params {number} right - Frustum right.
+	 * @params {number} top - Frustum top.
+	 * @params {number} bottom - Frustum bottom.
+	 * @params {number} near - Frustum near.
+	 * @params {number} far - Frustum far.
+	 *
+	 * @returns {ALMath.Matrix4} - A orthographic projection matrix.
+	 */
 	orthographicProjection : function(left, right, top, bottom, near, far){
 		var a = 2/(right-left);
 		var b = 2/(top-bottom);
@@ -1021,6 +1707,16 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to create a perspective projection matrix.
+	 *
+	 * @params {number} fov - Angle of the frustum in degrees.
+	 * @params {number} aspect - Aspect ratio.
+	 * @params {number} zNear - Frustum near.
+	 * @params {number} zFar - Frustum far.
+	 *
+	 * @returns {ALMath.Matrix4} - A perspective projection matrix.
+	 */
 	perspectiveProjection : function ( fov, aspect, zNear, zFar ) {
 		var a = aspect;
 
@@ -1038,6 +1734,13 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+	 * Function to get a matrix that can be used to transform normals on the shaders.
+	 *
+	 * @params {boolean} scale - If true or undefined, the matrix has a scale component so to get Matrix that transform normal is necessary transpose the matrix and then invert it. If it is false the transpose is enough.
+	 *
+	 * @returns {ALMath.Matrix4} - Matrix that can be used in the shader to transform normals.
+	 */
 	getNormalMatrix : function (scale){
 		var m3 = new ALMath.Matrix3();
 		var c = this.components;
@@ -1059,6 +1762,11 @@ ALMath.Matrix4.prototype = {
 		return m3;
 	},
 
+	/**
+   	 * Function to compute matrix inverse.
+   	 *
+   	 * @returns {ALMath.Matrix4} - this that is the invert matrix.
+   	 */
 	getInverse : function (){
 		var inv = new ALMath.Matrix4();
 		var tc = this.components;
@@ -1106,6 +1814,15 @@ ALMath.Matrix4.prototype = {
 
 	},
 
+	/**
+	 * Function to create a lookAt matrix.
+	 *
+	 * @params {ALMath.Vector3} eye - Camera's position.
+	 * @params {ALMath.Vector3} target - Where camera is looking.
+	 * @params {ALMath.Vector3} up - Camera's up vector.
+	 *
+	 * @returns {ALMath.Matrix4} - A lookAt matrix.
+	 */
 	lookAt : function(eye, target, up){
 		var eye = eye || new ALMath.Vector3();
 		var up = up || new ALMath.Vector3();
@@ -1130,6 +1847,23 @@ ALMath.Matrix4.prototype = {
 		return this;
 	},
 
+	/**
+   	 * Function clone a matrix.
+   	 *
+   	 * @returns {ALMath.Matrix4} - A copy of this.
+   	 */
+	clone : function(){
+		c = this.components;
+		cloned = new ALMath.Matrix4();
+		cloned.set(c[0],c[1],c[2],c[3],c[4],c[5],c[6],c[7],c[8],c[9],c[10],c[11],c[12],c[13],c[14],c[15]);
+		return cloned;
+	},
+
+	/**
+   	 * Function compare two matrices.
+   	 *
+   	 * @returns {boolean} - true if this and v are equals, false otherwise.
+   	 */
 	equals : function (m){
 		if (!(m instanceof ALMath.Matrix4)){
 			return false;

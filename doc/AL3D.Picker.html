@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: Picker</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Class: Picker</h1>
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="AL3D.html">AL3D</a>.</span>Picker</h2>
+        
+    
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+    
+
+    <h4 class="name" id="Picker"><span class="type-signature"></span>new Picker<span class="signature">(p)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Class that can be use to select meshes in the scene.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>p</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Object that represents the picker.
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Callback to execute when mesh is picked.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Ángel Luis Perales Gómez.</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="AL3D.js.html">AL3D.js</a>, <a href="AL3D.js.html#line4496">line 4496</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="doPick"><span class="type-signature"></span>doPick<span class="signature">(renderObjects, camera, width, height)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Do the pick process and call the mesh clickListener or the callback passed to picker constructor.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>renderObjects</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;<a href="AL3D.Object3D.html">AL3D.Object3D</a>></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Objects in the scene.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>camera</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="AL3D.Camera.html">AL3D.Camera</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Camera to use to render the scene.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Viewport width</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>height</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Viewport height.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="AL3D.js.html">AL3D.js</a>, <a href="AL3D.js.html#line4567">line 4567</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="pick"><span class="type-signature"></span>pick<span class="signature">(x, y)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+<div class="description">
+    Set the x and y coordenates and tell the system that must do the pick process.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">screen x coordinate.</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>y</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">screen y coordinate.</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="AL3D.js.html">AL3D.js</a>, <a href="AL3D.js.html#line4553">line 4553</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="AL3D.AcidMetalEffect.html">AcidMetalEffect</a></li><li><a href="AL3D.AmbientLight.html">AmbientLight</a></li><li><a href="AL3D.BasicMaterial.html">BasicMaterial</a></li><li><a href="AL3D.BlinnMaterial.html">BlinnMaterial</a></li><li><a href="AL3D.Camera.html">Camera</a></li><li><a href="AL3D.ChristmasEffect.html">ChristmasEffect</a></li><li><a href="AL3D.CoolEffect.html">CoolEffect</a></li><li><a href="AL3D.DirectionalLight.html">DirectionalLight</a></li><li><a href="AL3D.DreamVisionEffect.html">DreamVisionEffect</a></li><li><a href="AL3D.EdgeDetectionEffect.html">EdgeDetectionEffect</a></li><li><a href="AL3D.EffectBasedOnKernel.html">EffectBasedOnKernel</a></li><li><a href="AL3D.Exp2Fog.html">Exp2Fog</a></li><li><a href="AL3D.ExpFog.html">ExpFog</a></li><li><a href="AL3D.EyeFishEffect.html">EyeFishEffect</a></li><li><a href="AL3D.Fire2Effect.html">Fire2Effect</a></li><li><a href="AL3D.FireEffect.html">FireEffect</a></li><li><a href="AL3D.GaussianBlurEffect.html">GaussianBlurEffect</a></li><li><a href="AL3D.GreyScaleEffect.html">GreyScaleEffect</a></li><li><a href="AL3D.LambertMaterial.html">LambertMaterial</a></li><li><a href="AL3D.LenEffect.html">LenEffect</a></li><li><a href="AL3D.Light.html">Light</a></li><li><a href="AL3D.LinearFog.html">LinearFog</a></li><li><a href="AL3D.Material.html">Material</a></li><li><a href="AL3D.Mesh.html">Mesh</a></li><li><a href="AL3D.NegativeEffect.html">NegativeEffect</a></li><li><a href="AL3D.NightEffect.html">NightEffect</a></li><li><a href="AL3D.Object3D.html">Object3D</a></li><li><a href="AL3D.OrthographicCamera.html">OrthographicCamera</a></li><li><a href="AL3D.PerspectiveCamera.html">PerspectiveCamera</a></li><li><a href="AL3D.PhongMaterial.html">PhongMaterial</a></li><li><a href="AL3D.Picker.html">Picker</a></li><li><a href="AL3D.PixelationEffect.html">PixelationEffect</a></li><li><a href="AL3D.PointLight.html">PointLight</a></li><li><a href="AL3D.PosterizationEffect.html">PosterizationEffect</a></li><li><a href="AL3D.RadialBlurEffect.html">RadialBlurEffect</a></li><li><a href="AL3D.Renderer.html">Renderer</a></li><li><a href="AL3D.Scene.html">Scene</a></li><li><a href="AL3D.SepiaEffect.html">SepiaEffect</a></li><li><a href="AL3D.SharpenEffect.html">SharpenEffect</a></li><li><a href="AL3D.SkyBox.html">SkyBox</a></li><li><a href="AL3D.SpotLight.html">SpotLight</a></li><li><a href="AL3D.SunsetEffect.html">SunsetEffect</a></li><li><a href="AL3D.Texture.html">Texture</a></li><li><a href="AL3D.TextureManager.html">TextureManager</a></li><li><a href="AL3D.ToonMaterial.html">ToonMaterial</a></li><li><a href="ALMath.Matrix3.html">Matrix3</a></li><li><a href="ALMath.Matrix4.html">Matrix4</a></li><li><a href="ALMath.Quaternion.html">Quaternion</a></li><li><a href="ALMath.Vector2.html">Vector2</a></li><li><a href="ALMath.Vector3.html">Vector3</a></li><li><a href="ALMath.Vector4.html">Vector4</a></li></ul><h3>Namespaces</h3><ul><li><a href="AL3D.html">AL3D</a></li><li><a href="ALMath.html">ALMath</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.3</a> on Sun Jan 01 2017 00:21:43 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
