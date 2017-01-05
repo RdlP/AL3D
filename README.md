@@ -1,8 +1,41 @@
 AL3D is a library to render 3D scenes in the Web. It uses WebGL as low end technology. AL3D include a 3D library called AL3D, but also include a complete Math library called ALMath and a physics library called ALPhysics.
 
-## Basic Classes
+## How to build AL3D
 
-AL3D has a bascis class that are needed in order to render a simple scene. This classes are:
+AL3D uses a custom build system to build the full and minify library, and also to generate the documentation.
+
+The source is in the src folder, divided into ALMath and AL3D. In the root threre is a build.py. To build the library you need to run this script
+
+```
+python build.py
+```
+ or
+```
+chmod +x build.py
+./build.py
+```
+
+If you run the script without argument the build system will build the full and minify library in the `dist` folder. If you want to copy the sources outside `dist` folder you can run the script as follow:
+
+```
+python build.py --move_source_to=..
+```
+
+If you want to generate the doc you can use:
+
+```
+python build.py --generate_doc
+```
+
+The doc is generated in a `doc` directory in the script folder. If you can generate the documentation in a folder named `dir` you can use:
+
+```
+python build.py --generate_doc --output_doc_dir=dir
+```
+
+## Basics Classes
+
+AL3D has a basics classes that are needed in order to render a simple scene. These classes are:
  - Renderer
  - Camera
  - Scene
@@ -18,6 +51,12 @@ var scene = new AL3D.Scene();
 ### Renderer
 
 The Renderer class is the responsable for render the scene, you need to pass it the width and height of the viewport, if you want a render that fill the browser you can pass window.innerWidth and window.innerHeight for width and height respectively. To render the scene you need to tell it to the render as follow: `renderer.render(scene, camera);`
+
+In order to see the render in the webpage you need to retrieve the `dom element` from `Renderer` class and insert it in the html page. You can use the following code
+
+```javascript
+document.getElementById("canvas").appendChild(renderer.getDomElement());
+```
 
 ### Camera
 
@@ -47,22 +86,22 @@ Where `left`, `right`, `top`, `bottom`, `near` and `far` are the planes for the 
 
 ### Scene
 
-The Scene object is the responsible for store all object that must be render. You can add AL3D.Object3D to the scene. AL3D.Object3D is an abstract class from which all renderable object inherit. The following classes are classes that inherit from AL3D.Object3D and are instantiables.
+The Scene object is the responsible for store all objects that must be rendered. You can add AL3D.Object3D to the scene. AL3D.Object3D is an abstract class from which all renderable object inherit. The following classes are classes that inherit from AL3D.Object3D and are instantiables.
 
- - PointLight
- - DirectionaLight
- - SpotLight
- - AmbientLight
- - Mesh
- - OrthographicCamera
- - PerspectiveCamera
+ - `PointLight`
+ - `DirectionaLight`
+ - `SpotLight`
+ - `AmbientLight`
+ - `Mesh`
+ - `OrthographicCamera`
+ - `PerspectiveCamera`
 
 And here are other abstracts classes that also inherit from AL3D.Object3D.
 
- - Camera
- - Light
+ - `Camera`
+ - `Light`
 
-You can easely add objects to the scene with the `add` scene function
+You can easily add objects to the scene with the `add` scene function.
 
 ```javascript
 scene.add(mesh);
@@ -70,21 +109,21 @@ scene.add(mesh);
 
 ## Other important classes
 
-Apart from the previous classes AL3D has other important clases
+Apart from the previous classes, AL3D has other importants classes
 
  - `Mesh` class allows you to render meshes.
- - `Material` classes allow to add properties surfaces to the meshes
- - `Light` classes allow you to add light to the scene.
+ - `Material` classes allows to add properties surfaces to the meshes
+ - `Light` classe allows you to add lights to the scene.
 
 ### Mesh
 
-`Mesh` class allows you to render meshes. You can use the mesh constructor to create a mesh. When you use the constructor you need pass the vertices, indices of the mesh. Other important parameters are normals, uv, and material.
+`Mesh` class allows you to render meshes. You can use the mesh constructor to create a mesh. When you use the constructor you need pass the vertices, indices of the mesh and other important parameters such as normals, uv, and material.
 
 ```javascript
 var mesh = new AL3D.Mesh({vertices : [], indices : [], uv : [], normals : [], material : material});
 ```
 
-and then you can add it to the scene
+and then you can add it to the scene.
 
 ```javascript
 scene.add(mesh);
@@ -92,7 +131,7 @@ scene.add(mesh);
 
 In most cases you will not use this method. 
 
-You can create a basic primitives with static mesh method
+You can create a basics primitives with static mesh method.
 
 ```javascript
 var sphere = AL3D.Mesh.createSphere({radius : 1, material : material});
@@ -118,12 +157,12 @@ AL3D.Utils.loadModel({model : "suzanne.json"}, function(mesh){
 
 ### Material
 
-Material classes give surface properties to meshes, for example, a material can determine the amount of light that mesh absorbs, the color of the meshes, if the meshes is afected by the light etc.
+Materials classes give surface properties to meshes, for example, a material can determine the amount of light that mesh absorbs, the color of the mesh, if the mesh is afected by the light etc.
 
-AL3D has many different material classes. AL3D.Material is an abstract class from which inherit the following classes
+AL3D has many differents materials classes. AL3D.Material is an abstract class from which inherit the following classes
 
- - `BasicMaterial`. With this materal the mesh is not affected by the light
- - `LambertMaterial`. With this material the mesh gets diffuse light
+ - `BasicMaterial`. With this material the mesh is not affected by the light
+ - `LambertMaterial`. With this material the mesh gets diffuse component
  - `BlinnMaterial` With this material the mesh gets diffuse and specular components
  - `PhongMaterial`. With this material the mesh gets diffuse and specular components.
  - `TonnMaterial`. With this material the mesh gets a toon aspect.
@@ -135,14 +174,14 @@ The abstract class material constructor is
 ```
 
 Where `p` is and object that can contains the following properties
- - `texture`to specify a color map
+ - `texture` to specify a color map
  - `video` to use video as a texture 
  - `specularMap` to specify a specular map
  - `normalMap` to specify a normal map
 
-Please refer to the API documentation to the the other material parameters.
+Please refer to the API documentation to the other material parameters.
 
-To create a BlinnMaterial you can do the following
+For example, to create a `BlinnMaterial` you can do the following
 
 ```javascript
 var material = new AL3D.BlinnMaterial({shininess : 128, diffuse : 0xFFAAAAAA, specular : 0xffffffff, shading : AL3D.PhongInterpolation});
@@ -151,7 +190,7 @@ mesh.setMaterial(material);
 
 ### Lights
 
-Lights are necessary to give a realistic result. The lights will interact with the materials added to the meshes, but remember that lights doesn't affect to the BasicMaterial.
+Lights are nedeed to give a realistic result. The lights will interact with the materials added to the meshes, but remember that `BasicMaterial` is not affected by lights.
 
 AL3D has a couple of lights. `Light` is a abstract class from which inherit the following classes:
 
@@ -160,7 +199,7 @@ AL3D has a couple of lights. `Light` is a abstract class from which inherit the 
  - `AmbientLight`
  - `SpotLight`
 
-Please, refer to the API documentation to learn how to uses ligths.
+Please, refer to the API documentation to learn how to use ligths.
 
 Lights inherit from Object3D so, you can add it to the scene
 

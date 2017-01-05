@@ -5142,11 +5142,25 @@ AL3D.TextureManager.prototype = {
   }
 }
 
+/**
+ * Class that manager shaders.
+ *
+ * @class
+ * @author Ángel Luis Perales Gómez.
+ */
 AL3D.ShaderManager = function (){
   this._cache = {};
 }
 
 AL3D.ShaderManager.prototype = {
+
+  /**
+   * Get the shader functions needed for normal mapping.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where shader acts.
+   *
+   * @returns {string} - shader function to compute tangent space for normal mapping.
+   */
   getTangentComputationFunctions : function (mesh){
     var code = [];
     code.push("mat3 computeTangentSpace(vec3 N, vec3 p, vec2 uv){");
@@ -5170,6 +5184,14 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Get the point light function for a certain mesh.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where lights act.
+   *
+   * @returns {string} - shader function to compute points lights.
+   */
   getPointLightFor : function (mesh){
     var code = [];
     code.push("vec4 calculePointLight(int index, PointLight light, vec3 N){");
@@ -5211,6 +5233,14 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Get the point light function for a certain mesh with toon material.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where lights act.
+   *
+   * @returns {string} - shader function to compute points lights over toon material.
+   */
   getPointLightToonFor : function (mesh){
     var code = [];
     code.push("float calculePointLight(int index, PointLight light, vec3 N){");
@@ -5225,6 +5255,14 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Get the directional light function for a certain mesh.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where lights act.
+   *
+   * @returns {string} - shader function to compute directional lights.
+   */
   getDirectionalLightFor : function (mesh){
     var code = []
     code.push("vec4 calculeDirectionalLight(int index, DirectionalLight light, vec3 N){");
@@ -5264,6 +5302,14 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Get the directional light function for a certain mesh with toon material.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where lights act.
+   *
+   * @returns {string} - shader function to compute directionals lights over toon material.
+   */
   getDirectionalLightToonFor : function (mesh){
     var code = []
     code.push("float calculeDirectionalLight(int index, DirectionalLight light, vec3 N){");
@@ -5276,6 +5322,14 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Get the spot light function for a certain mesh.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where lights act.
+   *
+   * @returns {string} - shader function to compute spots lights.
+   */
   getSpotLigthFor : function (mesh){
     var code = [];
     code.push("vec4 calculeSpotLight(int index, SpotLight light, vec3 N){");
@@ -5321,6 +5375,14 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Get the spot light function for a certain mesh with toon material.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where lights act.
+   *
+   * @returns {string} - shader function to compute spots lights over toon material.
+   */
   getSpotLigthToonFor : function (mesh){
     var code = [];
     code.push("float calculeSpotLight(int index, SpotLight light, vec3 N){");
@@ -5341,6 +5403,14 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Get the code to compute linear fog for a certain mesh.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where fog acts.
+   *
+   * @returns {string} - shader code to compute fog factor.
+   */
   getLinearFogFactor : function(mesh){
     var code = [];
     code.push("float calculeLinearFogFactor(float start, float end, float dist){");
@@ -5349,6 +5419,13 @@ AL3D.ShaderManager.prototype = {
     code.push("}");
     return code.join("\n");
   },
+
+  /**
+   * Function to compute the shader, compile an link it.
+   *
+   * @param {AL3D.Mesh} mesh - Mesh where shader acts.
+   * @param {AL3D.Light[]} lights - Array of AL3D.Lights that acts over the mesh.
+   */
   getShader : function (mesh, lights){
     var vertexShader = [], fragmentShader = [], fragmentShaderStr, vertexShaderStr,id;
     var directionalLights=[], pointLights=[], ambientLights=[], spotLights=[];
